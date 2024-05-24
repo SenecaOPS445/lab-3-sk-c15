@@ -1,0 +1,80 @@
+name: Autograding Tests
+'on':
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: lab3a
+      id: lab3a
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: lab3a
+        setup-command: ''
+        command: python3 ./CheckLab3.py -f -v lab3a
+        timeout: 10
+        max-score: 1
+    - name: lab3b
+      id: lab3b
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: lab3b
+        setup-command: ''
+        command: python3 ./CheckLab3.py -f -v lab3b
+        timeout: 10
+        max-score: 1
+    - name: lab3c
+      id: lab3c
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: lab3c
+        setup-command: ''
+        command: python3 ./CheckLab3.py -f -v lab3c
+        timeout: 10
+        max-score: 1
+    - name: lab3d
+      id: lab3d
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: lab3d
+        setup-command: ''
+        command: python3 ./CheckLab3.py -f -v lab3d
+        timeout: 10
+        max-score: 1
+    - name: lab3e
+      id: lab3e
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: lab3e
+        setup-command: ''
+        command: python3 ./CheckLab3.py -f -v lab3e
+        timeout: 10
+        max-score: 1
+    - name: lab3f
+      id: lab3f
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: lab3f
+        setup-command: ''
+        command: python3 ./CheckLab3.py -f -v lab3f
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        LAB3A_RESULTS: "${{steps.lab3a.outputs.result}}"
+        LAB3B_RESULTS: "${{steps.lab3b.outputs.result}}"
+        LAB3C_RESULTS: "${{steps.lab3c.outputs.result}}"
+        LAB3D_RESULTS: "${{steps.lab3d.outputs.result}}"
+        LAB3E_RESULTS: "${{steps.lab3e.outputs.result}}"
+        LAB3F_RESULTS: "${{steps.lab3f.outputs.result}}"
+      with:
+        runners: lab3a,lab3b,lab3c,lab3d,lab3e,lab3f
